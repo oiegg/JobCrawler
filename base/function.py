@@ -1,3 +1,4 @@
+# coding=utf-8
 from bs4 import BeautifulSoup
 import requests
 from models import *
@@ -5,6 +6,13 @@ from datetime import datetime
 
 
 TIMEOUT = 16
+MAX_RETRY = 4
+g = G.objects.get()
+login_form = {'referer': '/',
+              'cookietime': '2592000',
+              'username': g.OIEGG_USERNAME,
+              'password': g.OIEGG_PASSWORD,
+              'loginsubmit': '登录'}
 
 
 def get_page(url):
@@ -23,13 +31,12 @@ def get_info_by_source(source_url):
         return i.get()
 
 
-def add_info(title, content, category, source_url):
+def add_info(source_url, category):
     if get_info_by_source(source_url):
         return
-    i = Info(title=title,
-             content=content,
+    i = Info(source_url=source_url,
              category=category,
-             source_url=source_url,
              add_time=datetime.now(),
-             post_status=0)
+             post_status=0,
+             retry=0)
     i.save()
