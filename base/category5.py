@@ -2,18 +2,18 @@ from django.http import HttpResponse
 from function import *
 
 
-CATEGORY = 4
+CATEGORY = 5
 
 
 def add():
-    url = 'http://career.bnu.edu.cn/JobInfomation.aspx?catid=472'
-    r = get_page(url)
-    soup = BeautifulSoup(r)
-    soup = soup.find('dl', attrs={'class': 'ji120101'})
-    a = soup.find_all('a')
-    for i in a:
-        source_url = 'http://career.bnu.edu.cn/' + i['href']
-        add_info(source_url=source_url, category=CATEGORY)
+    url = 'http://jobplatform.pku.edu.cn/portal/listinternship'
+    for i in range(1, 3):
+        r = get_page(url + '?page={0}'.format(i))
+        soup = BeautifulSoup(r)
+        soup = soup.find('ul', attrs={'class':'listul'})
+        for i in soup.find_all('a'):
+            source_url = 'http://jobplatform.pku.edu.cn' + i['href']
+            add_info(source_url=source_url, category=CATEGORY)
 
 
 def update(i):
@@ -21,10 +21,10 @@ def update(i):
         return
     r = get_page(i.source_url)
     soup = BeautifulSoup(r)
-    soup = soup.find('dl', attrs={'class': 'intro02'})
-    title = soup.find('dt').text
-    title = title.split(' ')[0]
-    content = str(soup.find('dd'))
+    soup = soup.find('ul', attrs={'class': 'wz1ul'})
+    li = soup.find_all('li')
+    title = li[0].text
+    content = str(li[2])
     i.title = title
     i.content = content
     i.post_status = 1
@@ -60,7 +60,8 @@ def post(i):
                 'usesig': '1',
                 'topicsubmit': 'true'}
         res = s.post(action, form, timeout=TIMEOUT)
-    except:
+    except Exception, e:
+        print e
         i.retry += 1
         i.post_status = 1
         i.save()
