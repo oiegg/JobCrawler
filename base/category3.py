@@ -6,14 +6,20 @@ CATEGORY = 3
 
 
 def add():
-    url = 'http://jobplatform.pku.edu.cn/portal/listemploy'
-    for i in range(1, 3):
-        r = get_page(url + '?page={0}'.format(i))
-        soup = BeautifulSoup(r)
-        soup = soup.find('ul', attrs={'class':'listul'})
-        for i in soup.find_all('a'):
-            source_url = 'http://jobplatform.pku.edu.cn' + i['href']
-            add_info(source_url=source_url, category=CATEGORY)
+    url = 'http://www.gaoxiaojob.com/zhaopin/total/'
+    r = get_page(url)
+    soup = BeautifulSoup(r)
+    soup = soup.find('div', attrs={'class': 'listbox'})
+    d = soup.find('div', attrs={'class': 'titles'})
+    p = 'http://www.gaoxiaojob.com' + d.find('a')['href']
+    r = get_page(p)
+    soup = BeautifulSoup(r)
+    soup = soup.find('div', attrs={'class': 'content'})
+    soup = soup.find('table').find('td')
+    a = soup.find_all('a')
+    for i in a:
+        source_url = i['href']
+        add_info(source_url=source_url, category=CATEGORY)
 
 
 def update(i):
@@ -21,10 +27,13 @@ def update(i):
         return
     r = get_page(i.source_url)
     soup = BeautifulSoup(r)
-    soup = soup.find('ul', attrs={'class': 'wz1ul'})
-    li = soup.find_all('li')
-    title = li[0].text
-    content = str(li[2])
+    for s in soup.find_all('script'):
+        s.replace_with('')
+    soup = soup.find('div', attrs={'class': 'viewbox'})
+    title = soup.find('div', attrs={'class': 'title'}).text
+    title = title.strip()
+    soup = soup.find('div', attrs={'class': 'content'})
+    content = str(soup.find('table'))
     i.title = title
     i.content = content
     i.post_status = 1
