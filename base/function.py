@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 from models import *
 from datetime import datetime
+import re
 
 
 TIMEOUT = 8
