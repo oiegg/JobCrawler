@@ -1,8 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from base.function import *
-from base import category1
-from base import category2
+from base.categories import *
 
 
 def postHandler(request):
