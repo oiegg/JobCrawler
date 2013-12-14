@@ -11,3 +11,10 @@ Currently Watching
 * http://jobplatform.pku.edu.cn/portal/listinternship
 * http://jobplatform.pku.edu.cn/portal/listinternship
 * http://career.bnu.edu.cn/JobInfomation.aspx?catid=471
+
+Proudly Post @
+--------------
+
+* http://www.oiegg.com/forumdisplay.php?fid=101
+* http://www.oiegg.com/forumdisplay.php?fid=735
+* http://www.oiegg.com/forumdisplay.php?fid=737
