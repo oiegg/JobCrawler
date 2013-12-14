@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from base.function import *
 from base import category1
+from base import category2
 
 
 def postHandler(request):
@@ -9,6 +10,5 @@ def postHandler(request):
     if not i:
         return
     i = i[0]
-    res = ''
-    exec('res = category{0}.post(i)'.format(i.category))
-    return HttpResponse(res)
+    exec('category{0}.post(i)'.format(i.category))
+    return HttpResponse(i.post_url)

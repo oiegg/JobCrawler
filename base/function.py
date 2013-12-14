@@ -5,7 +5,7 @@ from models import *
 from datetime import datetime
 
 
-TIMEOUT = 16
+TIMEOUT = 8
 MAX_RETRY = 4
 g = G.objects.get()
 login_form = {'referer': '/',
