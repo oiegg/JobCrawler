@@ -4,9 +4,15 @@ import requests
 from models import *
 from datetime import datetime
 import re
+import json
+import logging
 
 
-TIMEOUT = 8
+logger = logging.getLogger('default')
+logger.info('logger start!')
+
+
+TIMEOUT = 16
 MAX_RETRY = 4
 g = G.objects.get()
 login_form = {'referer': '/',

@@ -51,7 +51,7 @@ def post(i):
     content = str('<a href="%s" target="_blank">%s</a><div><br></div>' % (i.source_url, i.source_url)) + i.content
     try:
         s = requests.session()
-        s.post('http://www.oiegg.com/logging.php?action=login', login_form, timeout=TIMEOUT)
+        res = s.post('http://www.oiegg.com/logging.php?action=login', login_form, timeout=TIMEOUT)
         res = s.get('http://www.oiegg.com/post.php?action=newthread&fid=737&gid=794&extra=page%3D1', timeout=TIMEOUT)
         soup = BeautifulSoup(res.content)
         soup = soup.find('form', attrs={'id': 'postform'})
@@ -66,7 +66,8 @@ def post(i):
                 'usesig': '1',
                 'topicsubmit': 'true'}
         res = s.post(action, form, timeout=TIMEOUT)
-    except:
+    except Exception, e:
+        logger.error(e)
         i.retry += 1
         i.post_status = 1
         i.save()
