@@ -14,10 +14,7 @@ function load_recent_posted(){
         $.each(data["recent"], function(key, val){
             li.push("<li>" + "<a href=\"" + val["post_url"] + "\">" + val["title"] + "</a>" + "</li>");
         });
-        var d = $("<div/>",{
-            "id": "recent_posted"
-        });
-        d.appendTo($("body"));
+        var d = $("#recent_posted");
         d.append("<h2>Recent Posted(" + data["total"] + " in total)</h2>");
         d.append($( "<ul/>", {
             html: li.join( "" )
@@ -31,10 +28,7 @@ function load_recent_crawled(){
         $.each(data["recent"], function(key, val){
             li.push("<li>" + "<a href=\"" + val["source_url"] + "\">" + val["title"] + "</a>" + "</li>");
         });
-        var d = $("<div/>",{
-            "id": "recent_crawled"
-        });
-        d.appendTo($("body"));
+        var d = $("#recent_crawled");
         d.append("<h2>Recent Crawled(" + data["total"] + " in total)</h2>");
         d.append($( "<ul/>", {
             html: li.join( "" )
@@ -48,10 +42,7 @@ function load_recent_retry(){
         $.each(data["recent"], function(key, val){
             li.push("<li>" + "<a href=\"" + val["source_url"] + "\">" + val["title"] + "</a>" + "</li>");
         });
-        var d = $("<div/>",{
-            "id": "recent_retry"
-        });
-        d.appendTo($("body"));
+        var d = $("#recent_retry");
         d.append("<h2>Recent Max Retry Exceeded(" + data["total"] + " in total)</h2>");
         d.append($( "<ul/>", {
             html: li.join( "" )
@@ -65,10 +56,7 @@ function load_recent_garbled(){
         $.each(data["recent"], function(key, val){
             li.push("<li>" + "<a href=\"" + val["source_url"] + "\">" + val["title"] + "</a>" + "</li>");
         });
-        var d = $("<div/>",{
-            "id": "recent_garbled"
-        });
-        d.appendTo($("body"));
+        var d = $("#recent_garbled");
         d.append("<h2>Recent Marked as Garble(" + data["total"] + " in total)</h2>");
         d.append($( "<ul/>", {
             html: li.join( "" )
@@ -82,10 +70,7 @@ function load_recent_unknown(){
         $.each(data["recent"], function(key, val){
             li.push("<li>" + "<a href=\"" + val["source_url"] + "\">" + val["title"] + "</a>" + "</li>");
         });
-        var d = $("<div/>",{
-            "id": "recent_unknown"
-        });
-        d.appendTo($("body"));
+        var d = $("#recent_unknown");
         d.append("<h2>Recent Failed for Unknown Reasons(" + data["total"] + " in total)</h2>");
         d.append($( "<ul/>", {
             html: li.join( "" )
