@@ -90,10 +90,10 @@ LOGGING = {
         # }
     },
     'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
+        # 'null': {
+        #     'level': 'DEBUG',
+        #     'class': 'logging.NullHandler',
+        # },
         'console':{
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
