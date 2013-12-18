@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import secret
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+ON_SERVER = True
+if ':' in BASE_DIR:
+    ON_SERVER = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -21,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = secret.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not ON_SERVER
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -83,31 +85,27 @@ LOGGING = {
             'format': '%(levelname)s %(message)s'
         },
     },
-    'filters': {
-        # 'special': {
-        #     '()': 'project.logging.SpecialFilter',
-        #     'foo': 'bar',
-        # }
-    },
     'handlers': {
-        # 'null': {
-        #     'level': 'DEBUG',
-        #     'class': 'logging.NullHandler',
-        # },
-        'console':{
+        'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
+        'logfile': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, '..', 'django.log'),
+            'formatter': 'verbose'
+        },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
-            # 'filters': ['special']
+            'formatter': 'verbose'
         }
     },
     'loggers': {
         'default': {
-            'handlers': ['mail_admins'],
+            'handlers': ['logfile'],
             'propagate': True,
             'level': 'INFO',
         },
@@ -116,11 +114,6 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        # 'myproject.custom': {
-        #     'handlers': ['console', 'mail_admins'],
-        #     'level': 'INFO',
-        #     'filters': ['special']
-        # }
     }
 }
 

@@ -10,7 +10,6 @@ import random
 
 
 logger = logging.getLogger('default')
-logger.info('logger start!')
 
 
 TIMEOUT = 16
@@ -30,7 +29,8 @@ def get_page(url):
     for i in range(0, 3):
         try:
             res = requests.get(url=url, timeout=TIMEOUT)
-        except:
+        except Exception, e:
+            logger.error(e)
             pass
         else:
             return res.content
