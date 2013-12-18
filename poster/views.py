@@ -7,6 +7,7 @@ from base.categories import *
 def postHandler(request):
     res = {}
     res['machine'] = 'Poster'
+    g = G.objects.get()
     if g.POSTER_STATUS == 0:
         i = Info.objects.filter(post_status=1).order_by('add_time')
         source_url = request.GET.get('source_url')

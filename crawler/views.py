@@ -8,6 +8,7 @@ from base.categories import *
 def addHandler(request, cid=None):
     res = {}
     res['machine'] = 'Crawler'
+    g = G.objects.get()
     if g.CRAWLER_STATUS == 0:
         if cid:
             exec('category{0}.add()'.format(cid))
@@ -25,6 +26,7 @@ def addHandler(request, cid=None):
 def updateHandler(request):
     res = {}
     res['machine'] = 'Crawler'
+    g = G.objects.get()
     if g.CRAWLER_STATUS == 0:
         i = Info.objects.filter(post_status=0).order_by('add_time')
         if i:
