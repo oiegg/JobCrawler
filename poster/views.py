@@ -19,11 +19,8 @@ def postHandler(request):
         target_status = request.GET.get('status')
         if not source_url:
             target_status = None
-        print source_url
-        print target_status
         if i:
             i = i[0]
-            print i.title
             if target_status:
                 i.post_status = target_status
                 i.save()
