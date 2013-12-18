@@ -107,7 +107,7 @@ LOGGING = {
     },
     'loggers': {
         'default': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['mail_admins'],
             'propagate': True,
             'level': 'INFO',
         },
