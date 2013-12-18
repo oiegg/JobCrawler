@@ -15,12 +15,15 @@ logger.info('logger start!')
 
 TIMEOUT = 16
 MAX_RETRY = 4
-g = G.objects.get()
-login_form = {'referer': '/',
-              'cookietime': '2592000',
-              'username': g.OIEGG_USERNAME,
-              'password': g.OIEGG_PASSWORD,
-              'loginsubmit': '登录'}
+try:
+    g = G.objects.get()
+    login_form = {'referer': '/',
+                  'cookietime': '2592000',
+                  'username': g.OIEGG_USERNAME,
+                  'password': g.OIEGG_PASSWORD,
+                  'loginsubmit': '登录'}
+except:
+    pass
 
 
 def get_page(url):

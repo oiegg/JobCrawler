@@ -63,7 +63,7 @@ WSGI_APPLICATION = 'JobCrawler.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': secret.DB_NAME,
         'USER': secret.DB_USERNAME,
         'PASSWORD': secret.DB_PASSWORD,
