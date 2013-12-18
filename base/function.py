@@ -15,7 +15,7 @@ logger.info('Logger Start!')
 
 
 TIMEOUT = 16
-MAX_RETRY = 4
+MAX_RETRY = 8
 try:
     g = G.objects.get()
     login_form = {'referer': '/',

@@ -41,12 +41,6 @@ def update(i):
 def post(i):
     if i.category != CATEGORY:
         return
-    if i.retry > MAX_RETRY:
-        i.post_status = 3
-        i.save()
-        return
-    i.post_status = 2
-    i.save()
     subject = i.title[:26]
     content = str('<a href="%s" target="_blank">%s</a><div><br></div>' % (i.source_url, i.source_url)) + i.content
     try:
@@ -68,14 +62,7 @@ def post(i):
         res = s.post(action, form, timeout=TIMEOUT)
     except Exception, e:
         logger.error(e)
-        i.retry += 1
-        i.post_status = 1
-        i.save()
     else:
-        if 'tid' not in res.url:
-            i.post_status = 4
+        if 'tid' in res.url:
+            i.post_url = res.url
             i.save()
-            return
-        i.post_url = res.url
-        i.post_time = datetime.now()
-        i.save()

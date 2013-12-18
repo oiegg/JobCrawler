@@ -18,15 +18,26 @@ def postHandler(request):
             i = i.filter(source_url=source_url)
         if i:
             i = i[0]
-            exec('category{0}.post(i)'.format(i.category))
-            if source_url:
-                val = {}
-                if i.post_url:
-                    val['message'] = 'Successfully posted @ <a href={0}>{0}</a>'.format(i.post_url)
-                else:
-                    val['message'] = 'Post failed!'
-                return render_to_response('poster/redirect.html', val)
-            res['info'] = [i.toDict(), ]
+            i.retry += 1
+            if i.retry > MAX_RETRY:
+                i.post_status = 3
+                i.save()
+            else:
+                i.post_status = 2
+                i.save()
+                exec('category{0}.post(i)'.format(i.category))
+                if source_url:
+                    val = {}
+                    if i.post_url:
+                        i.post_time = datetime.now()
+                        i.save()
+                        val['message'] = 'Successfully posted @ <a href={0}>{0}</a>'.format(i.post_url)
+                    else:
+                        i.post_status = 1
+                        i.save()
+                        val['message'] = 'Post failed!'
+                    return render_to_response('poster/redirect.html', val)
+                res['info'] = [i.toDict(), ]
     return HttpResponse(json.dumps(res))
 
 
