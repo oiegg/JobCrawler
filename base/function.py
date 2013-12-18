@@ -10,7 +10,8 @@ import random
 import urllib
 
 
-logger = logging.getLogger('default')
+logger = logging.getLogger(__name__)
+logger.info('Logger Start!')
 
 
 TIMEOUT = 16

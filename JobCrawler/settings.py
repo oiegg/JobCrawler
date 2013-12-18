@@ -23,11 +23,11 @@ if ':' in BASE_DIR:
 SECRET_KEY = secret.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not ON_SERVER
+DEBUG = True
 
-TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -105,7 +105,7 @@ LOGGING = {
     },
     'loggers': {
         'default': {
-            'handlers': ['logfile'],
+            'handlers': ['console'],
             'propagate': True,
             'level': 'INFO',
         },
@@ -114,6 +114,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
+        'base': {
+            'handlers': ['logfile'],
+            'level': 'INFO',
+        }
     }
 }
 
