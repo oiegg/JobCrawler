@@ -5,7 +5,11 @@
     <META http-equiv="refresh" content="3;URL=/inspector/admin">
 </head>
 <body>
+    {% if info.post_url %}
     <p>Successfully posted @ <a href="{{ info.post_url }}">{{ info.post_url }}</a></p>
+    {% else %}
+    <p>Abandoned!</p>
+    {% endif %}
     <p>redirecting you to <a href="/inspector/admin">/inspector/admin</a></p>
 </body>
 </html>

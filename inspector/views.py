@@ -30,6 +30,7 @@ def adminHandler(request):
             l = len(i)
             i = i[random.randint(0, l - 1)]
             val['info'] = i
+            val['source_url'] = urllib.quote_plus(i.source_url)
         else:
             val['message'] = 'No un-posted! Fantastic!'
         return render_to_response('inspector/admin.html', val)

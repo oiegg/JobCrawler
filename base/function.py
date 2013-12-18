@@ -7,6 +7,7 @@ import re
 import json
 import logging
 import random
+import urllib
 
 
 logger = logging.getLogger('default')

@@ -15,16 +15,19 @@
 {#        <button class="btn btn-primary" onclick="feedme();">Feed me!</button>#}
 {#    </div>#}
     <div class="col-md-3" style="top: 256px;">
-        <a href="/poster?source_url={{ info.source_url }}"><button class="btn btn-primary">发布！</button></a>
+        <a href="/poster?source_url={{ source_url }}"><button class="btn btn-primary">发布！</button></a>
     </div>
     <div id="info" class="col-lg-6">
         <p><a href="{{ info.source_url }}">{{ info.title }}</a></p>
         <p>{{ info.content|safe }}</p>
     </div>
-    <div id="recent_post" class="col-md-3">
+    <div class="col-md-3" style="top: 256px;">
+        <a href="/poster?source_url={{ source_url }}&status=6"><button class="btn btn-warning">舍弃！</button></a>
+    </div>
+{#    <div id="recent_post" class="col-md-3">#}
 {#        <ul class="list-group">#}
 {##}
 {#        </ul>#}
-    </div>
+{#    </div>#}
 </body>
 </html>

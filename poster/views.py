@@ -1,10 +1,13 @@
 from django.http import HttpResponse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from base.function import *
 from base.categories import *
+from django.contrib.auth import authenticate, login
 
 
 def postHandler(request):
+    if not request.user.is_authenticated():
+        return redirect('/inspector/login')
     res = {}
     res['machine'] = 'Poster'
     g = G.objects.get()
@@ -13,9 +16,19 @@ def postHandler(request):
         source_url = request.GET.get('source_url')
         if source_url:
             i = i.filter(source_url=source_url)
+        target_status = request.GET.get('status')
+        if not source_url:
+            target_status = None
+        print source_url
+        print target_status
         if i:
             i = i[0]
-            exec('category{0}.post(i)'.format(i.category))
+            print i.title
+            if target_status:
+                i.post_status = target_status
+                i.save()
+            else:
+                exec('category{0}.post(i)'.format(i.category))
             if source_url:
                 val = {}
                 val['info'] = i
