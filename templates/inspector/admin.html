@@ -14,6 +14,7 @@
 {#        </ul>#}
 {#        <button class="btn btn-primary" onclick="feedme();">Feed me!</button>#}
 {#    </div>#}
+    {% if info %}
     <div class="col-md-3" style="top: 256px;">
         <a href="/poster?source_url={{ source_url }}"><button class="btn btn-primary">发布！</button></a>
     </div>
@@ -24,6 +25,9 @@
     <div class="col-md-3" style="top: 256px;">
         <a href="/poster?source_url={{ source_url }}&status=6"><button class="btn btn-warning">舍弃！</button></a>
     </div>
+    {% else %}
+    <p>{{ message }}</p>
+    {% endif %}
 {#    <div id="recent_post" class="col-md-3">#}
 {#        <ul class="list-group">#}
 {##}
