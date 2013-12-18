@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.contrib import admin
 admin.autodiscover()
@@ -13,3 +14,5 @@ urlpatterns = patterns('',
     url(r'^poster', include('poster.urls')),
     url(r'^inspector', include('inspector.urls')),
 )
+
+urlpatterns += staticfiles_urlpatterns()
