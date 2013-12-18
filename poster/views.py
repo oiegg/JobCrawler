@@ -16,19 +16,32 @@ def postHandler(request):
         source_url = request.GET.get('source_url')
         if source_url:
             i = i.filter(source_url=source_url)
-        target_status = request.GET.get('status')
-        if not source_url:
-            target_status = None
         if i:
             i = i[0]
-            if target_status:
-                i.post_status = target_status
-                i.save()
-            else:
-                exec('category{0}.post(i)'.format(i.category))
+            exec('category{0}.post(i)'.format(i.category))
             if source_url:
                 val = {}
-                val['info'] = i
+                if i.post_url:
+                    val['message'] = 'Successfully posted @ <a href={0}>{0}</a>'.format(i.post_url)
+                else:
+                    val['message'] = 'Post failed!'
                 return render_to_response('poster/redirect.html', val)
             res['info'] = [i.toDict(), ]
     return HttpResponse(json.dumps(res))
+
+
+def deleteHandler(request):
+    if not request.user.is_authenticated():
+        return redirect('/inspector/login')
+    res = {}
+    res['machine'] = 'Poster'
+    source_url = request.GET.get('source_url')
+    if source_url:
+        i = Info.objects.filter(source_url=source_url)
+        if i:
+            i = i[0]
+            i.post_status = 6
+            i.save()
+            val = {}
+            val['message'] = 'Abandoned!'
+    return render_to_response('poster/redirect.html', val)

@@ -23,7 +23,7 @@
         <p>{{ info.content|safe }}</p>
     </div>
     <div class="col-md-3" style="top: 256px;">
-        <a href="/poster?source_url={{ source_url }}&status=6"><button class="btn btn-warning">舍弃！</button></a>
+        <a href="/poster/delete?source_url={{ source_url }}"><button class="btn btn-warning">舍弃！</button></a>
     </div>
     {% else %}
     <p>{{ message }}</p>
