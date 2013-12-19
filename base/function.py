@@ -16,15 +16,30 @@ logger.info('Logger Start!')
 
 TIMEOUT = 16
 MAX_RETRY = 8
-try:
-    g = G.objects.get()
-    login_form = {'referer': '/',
-                  'cookietime': '2592000',
-                  'username': g.OIEGG_USERNAME,
-                  'password': g.OIEGG_PASSWORD,
-                  'loginsubmit': '登录'}
-except:
-    pass
+se = requests.session()
+
+
+def check_oiegg_login(page):
+    soup = BeautifulSoup(page)
+    soup = soup.find('div', attrs={'id': 'menu'})
+    if 'pm.php' in str(soup):
+        return True
+    return False
+
+
+def login_oiegg():
+    for i in range(0, MAX_RETRY):
+        g = G.objects.get()
+        login_form = {'referer': '/',
+                      'cookietime': '2592000',
+                      'username': g.OIEGG_USERNAME,
+                      'password': g.OIEGG_PASSWORD,
+                      'loginsubmit': '登录'}
+        se.post('http://www.oiegg.com/logging.php?action=login', login_form, timeout=TIMEOUT)
+        if check_oiegg_login(se.get('http://www.oiegg.com/index.php').content):
+            logger.info('Login succeeded!')
+            return
+    logger.error('Login failed!')
 
 
 def get_page(url):

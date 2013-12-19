@@ -37,9 +37,10 @@ def post(i):
     subject = i.title[:26]
     content = str('<a href="%s" target="_blank">%s</a><div><br></div>' % (i.source_url, i.source_url)) + i.content
     try:
-        s = requests.session()
-        s.post('http://www.oiegg.com/logging.php?action=login', login_form, timeout=TIMEOUT)
-        res = s.get('http://www.oiegg.com/post.php?action=newthread&fid=735&gid=794&extra=page%3D1', timeout=TIMEOUT)
+        res = se.get('http://www.oiegg.com/post.php?action=newthread&fid=735&gid=794&extra=page%3D1', timeout=TIMEOUT)
+        if not check_oiegg_login(res.content):
+            login_oiegg()
+            res = se.get('http://www.oiegg.com/post.php?action=newthread&fid=735&gid=794&extra=page%3D1', timeout=TIMEOUT)
         soup = BeautifulSoup(res.content)
         soup = soup.find('form', attrs={'id': 'postform'})
         formhash = soup.find('input', attrs={'id': 'formhash'})['value']
@@ -53,10 +54,12 @@ def post(i):
                 'htmlon': '1',
                 'usesig': '1',
                 'topicsubmit': 'true'}
-        res = s.post(action, form, timeout=TIMEOUT)
+        res = se.post(action, form, timeout=TIMEOUT)
     except Exception, e:
         logger.error(e)
     else:
         if 'tid' in res.url:
             i.post_url = res.url
             i.save()
+        else:
+            logger.error('unknown reason for "{0}"'.format(i.source_url))
