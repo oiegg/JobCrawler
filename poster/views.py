@@ -6,8 +6,6 @@ from django.contrib.auth import authenticate, login
 
 
 def postHandler(request):
-    if not request.user.is_authenticated():
-        return redirect('/inspector/login')
     res = {}
     res['machine'] = 'Poster'
     g = G.objects.get()
